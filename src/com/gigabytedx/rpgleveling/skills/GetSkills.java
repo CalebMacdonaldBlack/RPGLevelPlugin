@@ -42,7 +42,7 @@ public class GetSkills {
 						.getConfigurationSection(skillName).getConfigurationSection("levels")
 						.getConfigurationSection(levelName).getList("debuffs");
 				int lvlNumber = main.getConfig().getConfigurationSection("skills").getConfigurationSection(skillName)
-						.getConfigurationSection("levels").getConfigurationSection(levelName).getInt("lvlNumber");
+						.getConfigurationSection("levels").getConfigurationSection(levelName).getInt("levelNumber");
 
 				// add new level to list
 				levels.add(new Level(namesOfItemsUnlocked, buffs, debuffs, lvlNumber, skillName, levelName));

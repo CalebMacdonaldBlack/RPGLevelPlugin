@@ -24,14 +24,64 @@ skills:
         debuffs:
         levelNumber: 10
   Archer:
+    experienceGainedThough:
+      - Bow
+    levels:
+      Hunter:
+        itemUnlock:
+          - Hunting Bow
+          - Shoddy Helmet
+          - shoddy Leggings
+          - Shoddy Boots
+          - Shoddy Chestpeice
+        buffs:
+        debuffs:
+        levelNumber: 5
+      Bow Man:
+        itemUnlock:
+          - Long Bow
+          - hardended Helmet
+          - hardended Leggings
+          - Shohardendedddy Boots
+          - hardended Chestpeice
+        buffs:
+        debuffs:
+        levelNumber: 10
   ImprovisedCombat:
   Agility:
 Items:
   Claymore:
     Type: IRON_SWORD
-    Lore: Rusty Iron Sword
-    icon: 256
+    Lore: This is a rusty iron sword crafted by a young blacksmith apprentice. It doesn't do much damage but you can tell the poor kid put hit heart and soul into it
     Enchanted: false
+    Cost: 20
+    Buffs:
+      - bleed1
+    Debuffs:
+      - slowness1
+  Swiehandler:
+    Type: IRON_SWORD
+    Lore: A 2 meter long sword that weighs more at least 100kg. Why would anybody consider wielding this?
+    Enchanted: false
+    Cost: 40
+    Buffs:
+      - bleed1
+    Debuffs:
+      - slowness1
+  Hunting Bow:
+    Type: BOW
+    Lore: A pesky little hunting bow. Extended use burdens the archer with lasting blisters
+    Enchanted: false
+    Cost: 15
+    Buffs:
+      - bleed1
+    Debuffs:
+      - slowness1
+  Long Bow:
+    Type: BOW
+    Lore: The great long bow that Sir Johnathan Weathersteed rode into battle with.
+    Enchanted: false
+    Cost: 100
     Buffs:
       - bleed1
     Debuffs:
