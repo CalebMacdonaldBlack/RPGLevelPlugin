@@ -1,0 +1,57 @@
+skills: 
+  SwordsMan:
+    experienceGainedThough:
+      - sword
+    levels:
+      Beginner:
+        itemUnlock:
+          - Claymore
+          - Shoddy Helmet
+          - shoddy Leggings
+          - Shoddy Boots
+          - Shoddy Chestpeice
+        buffs:
+        debuffs:
+        levelNumber: 5
+      experienced:
+        itemUnlock:
+          - Swiehandler
+          - hardended Helmet
+          - hardended Leggings
+          - Shohardendedddy Boots
+          - hardended Chestpeice
+        buffs:
+        debuffs:
+        levelNumber: 10
+  Archer:
+  ImprovisedCombat:
+  Agility:
+Items:
+  Claymore:
+    Type: IRON_SWORD
+    Lore: Rusty Iron Sword
+    icon: 256
+    Enchanted: false
+    Buffs:
+      - bleed1
+    Debuffs:
+      - slowness1
+Buffs:
+  bleed1:
+    Rate: 0.5
+    Duration: 3
+    Interval: 1000
+    Intensity: 1
+    Type: damageOverTime
+    Target: opponent
+    Trigger: hit
+Debuffs:
+  slowness1:
+    Rate: 0
+    Duration: 0
+    Interval: 1000
+    Intensity: 1
+    Type: slowness
+    Target: player
+    Trigger: hold
+    

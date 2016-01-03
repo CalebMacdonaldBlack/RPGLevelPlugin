@@ -1,0 +1,4 @@
+name: GigabyteDXRPGLeveling
+main: com.gigabytedx.rpgleveling.Main
+version: 1.0
+commands:
