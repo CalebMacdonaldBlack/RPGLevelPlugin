@@ -1,5 +1,46 @@
 package com.gigabytedx.rpgleveling.interact;
 
-public class Interact {
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import com.gigabytedx.rpgleveling.Main;
+import com.gigabytedx.rpgleveling.item.Item;
+import com.gigabytedx.rpgleveling.modifiers.Buff;
+
+public class Interact implements Listener{
+	
+	@EventHandler
+	public void onHit(EntityDamageByEntityEvent event){
+		if(event.getDamager() instanceof Player){
+			Player damager = (Player) event.getDamager();
+			try{
+				damager.sendMessage(Main.itemMap.keySet().toString());
+			Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
+			for(Buff buff: itemUsed.getBuffs()){
+				buff.applyBuff(damager, event.getEntity());
+			}
+			}catch(NullPointerException e){
+				damager.sendMessage("not using a custom item");
+			}
+			
+		}else if(event.getDamager() instanceof Arrow){
+			Arrow arrow = (Arrow) event.getDamager();
+			if(arrow.getShooter() instanceof Player){
+				Player damager = (Player) arrow.getShooter();
+				try{
+					damager.sendMessage(Main.itemMap.keySet().toString());
+				Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
+				for(Buff buff: itemUsed.getBuffs()){
+					buff.applyBuff(damager, event.getEntity());
+				}
+				}catch(NullPointerException e){
+					damager.sendMessage("not using a custom item");
+				}
+				
+			}
+		}
+	}
 }

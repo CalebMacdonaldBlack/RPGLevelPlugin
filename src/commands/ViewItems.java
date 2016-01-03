@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.item.Item;
+import com.gigabytedx.rpgleveling.modifiers.Buff;
 
 public class ViewItems implements CommandExecutor {
 	
@@ -56,6 +57,11 @@ public class ViewItems implements CommandExecutor {
 					}
 				}
 				lore.add(sentence);
+				lore.add(" ");
+				lore.add(ChatColor.GOLD + "Buffs");
+				for(Buff buff: item.getBuffs()){
+					lore.add(ChatColor.DARK_PURPLE + " - " +  buff.getName());
+				}
 				meta.setLore(lore);
 				itemStack.setItemMeta(meta);
 				inv.addItem(itemStack);

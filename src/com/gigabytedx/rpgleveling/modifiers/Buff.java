@@ -1,27 +1,47 @@
 package com.gigabytedx.rpgleveling.modifiers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+
 public class Buff {
 	double rate;
-	double duration;
+	Long duration;
 	Long interval;
 	double intensity;
 	String type;
 	String target;
 	String trigger;
+	String name;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	List<Entity> currentBuffs = new ArrayList<>();
 	
 	public double getRate() {
 		return rate;
+	}
+
+	public List<Entity> getCurrentBuffs() {
+		return currentBuffs;
 	}
 
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
 
-	public double getDuration() {
+	public Long getDuration() {
 		return duration;
 	}
 
-	public void setDuration(double duration) {
+	public void setDuration(Long duration) {
 		this.duration = duration;
 	}
 
@@ -65,9 +85,10 @@ public class Buff {
 		this.trigger = trigger;
 	}
 
-	public Buff(double rate, double duration, Long interval, double intensity, String type, String target,
+	public Buff(String name, double rate, Long duration, Long interval, double intensity, String type, String target,
 			String trigger) {
 		super();
+		this.name = name;
 		this.rate = rate;
 		this.duration = duration;
 		this.interval = interval;
@@ -75,6 +96,9 @@ public class Buff {
 		this.type = type;
 		this.target = target;
 		this.trigger = trigger;
+	}
+
+	public void applyBuff(Player damager, Entity entity) {
 	}
 	
 	

@@ -89,8 +89,8 @@ Items:
 Buffs:
   bleed1:
     Rate: 0.5
-    Duration: 3
-    Interval: 1000
+    Duration: 3000
+    Interval: 20
     Intensity: 1
     Type: damageOverTime
     Target: opponent
@@ -99,7 +99,7 @@ Debuffs:
   slowness1:
     Rate: 0
     Duration: 0
-    Interval: 1000
+    Interval: 20
     Intensity: 1
     Type: slowness
     Target: player

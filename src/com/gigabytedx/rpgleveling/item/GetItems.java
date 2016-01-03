@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -39,7 +40,8 @@ public class GetItems {
 			List<Buff> buffs = new ArrayList<>();
 			for(String buffName : buffNames){
 				try{
-					buffs.add(Main.buffs.get(buffName));
+					
+					buffs.add(Main.buffsMap.get(buffName));
 				}catch(NullPointerException e){
 					//e.printStackTrace();
 				}
@@ -48,13 +50,14 @@ public class GetItems {
 			List<Debuff> debuffs = new ArrayList<>();
 			for(String debuffName : debuffNames){
 				try{
-					buffs.add(Main.buffs.get(debuffName));
+					debuffs.add(Main.debuffsMap.get(debuffName));
 				}catch(NullPointerException e){
 					//e.printStackTrace();
 				}
 			}
 			// add new skill to list
 			items.add(new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
+			Main.itemMap.put(ChatColor.BLUE + itemName, new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
 		}
 
 	}
