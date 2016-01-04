@@ -1,4 +1,4 @@
-package com.gigabytedx.rpgleveling.interact;
+package com.gigabytedx.rpgleveling.events;
 
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.potion.PotionEffect;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.item.Item;
-import com.gigabytedx.rpgleveling.modifiers.Buff;
+import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
 public class Interact implements Listener{
 	
@@ -21,7 +21,7 @@ public class Interact implements Listener{
 			Player damager = (Player) event.getDamager();
 			try{
 			Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
-			for(Buff buff: itemUsed.getBuffs()){
+			for(Modifier buff: itemUsed.getBuffs()){
 				System.out.println("appbuff: " + buff.toString());
 				buff.applyBuff(damager, event.getEntity());
 			}
@@ -35,7 +35,7 @@ public class Interact implements Listener{
 				Player damager = (Player) arrow.getShooter();
 				try{
 				Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
-				for(Buff buff: itemUsed.getBuffs()){
+				for(Modifier buff: itemUsed.getBuffs()){
 					buff.applyBuff(damager, event.getEntity());
 				}
 				}catch(NullPointerException e){
@@ -56,11 +56,11 @@ public class Interact implements Listener{
 		try{
 		Item itemUsed = Main.itemMap.get(event.getPlayer().getInventory().getItem(event.getNewSlot()).getItemMeta().getDisplayName());
 		System.out.println("Well this ran fine..." + itemUsed.getDebuffs().toString());
-		for(Buff buff: itemUsed.getBuffs()){
+		for(Modifier buff: itemUsed.getBuffs()){
 			if(buff.getTrigger().equals("hold"))
 			buff.applyBuff(event.getPlayer(), null);
 		}
-		for(Buff buff: itemUsed.getDebuffs()){
+		for(Modifier buff: itemUsed.getDebuffs()){
 			if(buff.getTrigger().equals("hold"))
 			buff.applyBuff(event.getPlayer(), null);
 		}

@@ -1,4 +1,4 @@
-package com.gigabytedx.rpgleveling.modifiers.buffs;
+package com.gigabytedx.rpgleveling.modifiers.modifier;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.gigabytedx.rpgleveling.modifiers.Buff;
+import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
-public class Slowness extends Buff{
+public class Slowness extends Modifier{
 
 	public Slowness(String name, double rate, Long duration, Long interval, double intensity, String type,
 			String target, String trigger) {

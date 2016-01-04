@@ -7,12 +7,12 @@ import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.gigabytedx.rpgleveling.Main;
-import com.gigabytedx.rpgleveling.modifiers.buffs.DamageOverTime;
-import com.gigabytedx.rpgleveling.modifiers.buffs.Slowness;
+import com.gigabytedx.rpgleveling.modifiers.modifier.DamageOverTime;
+import com.gigabytedx.rpgleveling.modifiers.modifier.Slowness;
 
 public class GetBuffs {
-	private List<Buff> buffs;
-	private List<Buff> debuffs;
+	private List<Modifier> buffs;
+	private List<Modifier> debuffs;
 	Main main;
 
 	public GetBuffs(Main main) {
@@ -33,7 +33,7 @@ public class GetBuffs {
 		for (String buffName : buffConfigSectionNames) { 
 			ConfigurationSection buffConfSection = main.getConfig().getConfigurationSection("Buffs")
 					.getConfigurationSection(buffName);
-			Buff buff;
+			Modifier buff;
 			switch (buffConfSection.getString("Type")) {
 			case "damageOverTime":
 				buff = new DamageOverTime(buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
@@ -65,7 +65,7 @@ public class GetBuffs {
 		for (String buffName : debuffConfigSectionNames) { 
 			ConfigurationSection debuffConfSection = main.getConfig().getConfigurationSection("Debuffs")
 					.getConfigurationSection(buffName);
-			Buff buff;
+			Modifier buff;
 			switch (debuffConfSection.getString("Type")) {
 			case "slowness":
 				buff = new Slowness(buffName, debuffConfSection.getDouble("Rate"), debuffConfSection.getLong("Duration"),

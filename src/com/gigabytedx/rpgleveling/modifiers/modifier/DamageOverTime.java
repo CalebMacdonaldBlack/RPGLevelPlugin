@@ -1,4 +1,4 @@
-package com.gigabytedx.rpgleveling.modifiers.buffs;
+package com.gigabytedx.rpgleveling.modifiers.modifier;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.gigabytedx.rpgleveling.Main;
-import com.gigabytedx.rpgleveling.modifiers.Buff;
+import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
-public class DamageOverTime extends Buff {
+public class DamageOverTime extends Modifier {
 
 	public DamageOverTime(String name, double rate, Long duration, Long interval, double intensity, String type, String target,
 			String trigger) {

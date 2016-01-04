@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.gigabytedx.rpgleveling.Main;
-import com.gigabytedx.rpgleveling.modifiers.Buff;
+import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
 public class GetItems {
 	private List<Item> items;
@@ -36,7 +36,7 @@ public class GetItems {
 			boolean enchanted = itemConfSection.getBoolean("Enchanted");
 			
 			List<String> buffNames =  (List<String>) itemConfSection.getList("Buffs");
-			List<Buff> buffs = new ArrayList<>();
+			List<Modifier> buffs = new ArrayList<>();
 			for(String buffName : buffNames){
 				try{
 					
@@ -46,7 +46,7 @@ public class GetItems {
 				}
 			}
 			List<String> debuffNames = (List<String>) itemConfSection.getList("Debuffs");
-			List<Buff> debuffs = new ArrayList<>();
+			List<Modifier> debuffs = new ArrayList<>();
 			for(String debuffName : debuffNames){
 				try{
 					debuffs.add(Main.debuffsMap.get(debuffName));

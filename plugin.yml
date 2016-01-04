@@ -6,3 +6,5 @@ commands:
     description: print out skills and info to player
   viewitems:
     description: view items in inventory
+  getxp:
+    description: view amount of xp you have

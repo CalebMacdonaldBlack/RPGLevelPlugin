@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public class Buff {
+public class Modifier {
 	double rate;
 	Long duration;
 	Long interval;
@@ -85,7 +85,7 @@ public class Buff {
 		this.trigger = trigger;
 	}
 
-	public Buff(String name, double rate, Long duration, Long interval, double intensity, String type, String target,
+	public Modifier(String name, double rate, Long duration, Long interval, double intensity, String type, String target,
 			String trigger) {
 		super();
 		this.name = name;

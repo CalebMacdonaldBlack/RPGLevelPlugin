@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.item.Item;
-import com.gigabytedx.rpgleveling.modifiers.Buff;
+import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
 public class ViewItems implements CommandExecutor {
 
@@ -61,7 +61,7 @@ public class ViewItems implements CommandExecutor {
 				lore.add(" ");
 				lore.add(ChatColor.GOLD + "Buffs");
 
-				for (Buff buff : item.getBuffs()) {
+				for (Modifier buff : item.getBuffs()) {
 					try {
 						lore.add(ChatColor.DARK_PURPLE + " - " + buff.getName());
 					} catch (NullPointerException e) {
@@ -75,7 +75,7 @@ public class ViewItems implements CommandExecutor {
 				}
 				lore.add(" ");
 				lore.add(ChatColor.RED + "Debuffs");
-				for (Buff buff : item.getDebuffs()) {
+				for (Modifier buff : item.getDebuffs()) {
 					lore.add(ChatColor.DARK_PURPLE + " - " + buff.getName());
 				}
 				meta.setLore(lore);
