@@ -23,18 +23,19 @@ import com.gigabytedx.rpgleveling.modifiers.GetBuffs;
 import com.gigabytedx.rpgleveling.skills.GetSkills;
 
 import commands.GetXP;
+import commands.OpenShop;
 import commands.PrintSkills;
+import commands.SetSkillExperience;
 import commands.ViewItems;
 
 public class Main extends JavaPlugin {
-	public static Main pluginInstance;
-	public static GetSkills skills;
+	public GetSkills skills;
 	public static GetBuffs buffs;
-	public static GetItems items;
+	public GetItems items;
 	public static Map<String, Item> itemMap = new HashMap<>();
 	public static Map<String, Modifier> buffsMap= new HashMap<>();
 	public static Map<String, Modifier > debuffsMap= new HashMap<>();
-	public static int loreLength = 6;
+	public int loreLength = 6;
 	public File playerLevelData = new File(getDataFolder()+"/Data/playerData.yml");
 	public FileConfiguration playerExperience = YamlConfiguration.loadConfiguration(playerLevelData);
 	
@@ -45,7 +46,6 @@ public class Main extends JavaPlugin {
 		registerEvents();
 		registerConfig();
 		logger.info(pdfFile.getName() + " has been enabled (V." + pdfFile.getVersion() + ")");
-		pluginInstance = this;
 		loadFiles();
 	}
 
@@ -64,9 +64,11 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		 getCommand("printskills").setExecutor(new PrintSkills());
-		 getCommand("viewitems").setExecutor(new ViewItems());
+		 getCommand("printskills").setExecutor(new PrintSkills(this));
+		 getCommand("viewitems").setExecutor(new ViewItems(this));
 		 getCommand("getxp").setExecutor(new GetXP(this));
+		 getCommand("openshop").setExecutor(new OpenShop(this));
+		 getCommand("setskillexperience").setExecutor(new SetSkillExperience(this));
 	}
 
 	private void registerConfig() {
@@ -96,6 +98,7 @@ public class Main extends JavaPlugin {
 		}else{
 			try {
 				playerExperience.set("XP from Generic kill", 50);
+				playerExperience.set("Level Upgrade at", 1000);
 				playerExperience.save(playerLevelData);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

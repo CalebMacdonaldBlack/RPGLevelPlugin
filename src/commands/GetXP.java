@@ -20,10 +20,9 @@ public class GetXP implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player){
 			Player player = (Player) sender;
-			player.sendMessage(ChatColor.GOLD + "Your current XP is: " + ChatColor.BLUE + plugin.playerExperience.getInt(player.getUniqueId().toString() + ".totalXP"));
-			player.sendMessage(ChatColor.GOLD + "Your current Swordsman XP is: " + ChatColor.BLUE + plugin.playerExperience.getInt(player.getUniqueId().toString() + ".swordsmanXP"));
-			player.sendMessage(ChatColor.GOLD + "Your current Archer XP is: " + ChatColor.BLUE + plugin.playerExperience.getInt(player.getUniqueId().toString() + ".archerXP"));
-
+			for(String xpTypeName: plugin.playerExperience.getConfigurationSection(player.getUniqueId().toString()).getKeys(false)){
+				player.sendMessage(ChatColor.GOLD + "XP for "+ xpTypeName +" is: " + ChatColor.BLUE + plugin.playerExperience.getInt(player.getUniqueId().toString() + "." + xpTypeName));
+			}
 		}
 		return false;
 	}

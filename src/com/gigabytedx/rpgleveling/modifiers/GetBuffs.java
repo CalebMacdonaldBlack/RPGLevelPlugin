@@ -13,15 +13,15 @@ import com.gigabytedx.rpgleveling.modifiers.modifier.Slowness;
 public class GetBuffs {
 	private List<Modifier> buffs;
 	private List<Modifier> debuffs;
-	Main main;
+	Main plugin;
 
-	public GetBuffs(Main main) {
+	public GetBuffs(Main plugin) {
 		super();
 		buffs = new ArrayList<>();
 		debuffs = new ArrayList<>();
-		this.main = main;
-		getBuffsFromConfig(main);
-		getDebuffsFromConfig(main);
+		this.plugin = plugin;
+		getBuffsFromConfig(plugin);
+		getDebuffsFromConfig(plugin);
 	}
 
 	private void getBuffsFromConfig(Main main) {
@@ -36,7 +36,7 @@ public class GetBuffs {
 			Modifier buff;
 			switch (buffConfSection.getString("Type")) {
 			case "damageOverTime":
-				buff = new DamageOverTime(buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
+				buff = new DamageOverTime(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
 						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
 						buffConfSection.getString("type"), buffConfSection.getString("Target"),
 						buffConfSection.getString("Trigger"));
@@ -44,7 +44,7 @@ public class GetBuffs {
 						Main.buffsMap.put(buffName, buff);
 				break;
 			case "slowness":
-				buff = new Slowness(buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
+				buff = new Slowness(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
 						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
 						buffConfSection.getString("type"), buffConfSection.getString("Target"),
 						buffConfSection.getString("Trigger"));
@@ -68,7 +68,7 @@ public class GetBuffs {
 			Modifier buff;
 			switch (debuffConfSection.getString("Type")) {
 			case "slowness":
-				buff = new Slowness(buffName, debuffConfSection.getDouble("Rate"), debuffConfSection.getLong("Duration"),
+				buff = new Slowness(plugin, buffName, debuffConfSection.getDouble("Rate"), debuffConfSection.getLong("Duration"),
 						debuffConfSection.getLong("Interval"), debuffConfSection.getDouble("Intensity"),
 						debuffConfSection.getString("type"), debuffConfSection.getString("Target"),
 						debuffConfSection.getString("Trigger"));

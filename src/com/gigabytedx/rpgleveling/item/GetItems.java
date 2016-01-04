@@ -29,34 +29,41 @@ public class GetItems {
 
 		// iterate through skill names
 		for (String itemName : itemConfigSectionNames) {
-			ConfigurationSection itemConfSection = main.getConfig().getConfigurationSection("Items").getConfigurationSection(itemName);
+			ConfigurationSection itemConfSection = main.getConfig().getConfigurationSection("Items")
+					.getConfigurationSection(itemName);
 			String lore = itemConfSection.getString("Lore");
 			Material type = Material.getMaterial(itemConfSection.getString("Type"));
 			double cost = itemConfSection.getDouble("Cost");
 			boolean enchanted = itemConfSection.getBoolean("Enchanted");
-			
-			List<String> buffNames =  (List<String>) itemConfSection.getList("Buffs");
+			List<String> buffNames = (List<String>) itemConfSection.getList("Buffs");
 			List<Modifier> buffs = new ArrayList<>();
-			for(String buffName : buffNames){
-				try{
-					
-					buffs.add(Main.buffsMap.get(buffName));
-				}catch(NullPointerException e){
-					//e.printStackTrace();
-				}
-			}
 			List<String> debuffNames = (List<String>) itemConfSection.getList("Debuffs");
 			List<Modifier> debuffs = new ArrayList<>();
-			for(String debuffName : debuffNames){
-				try{
-					debuffs.add(Main.debuffsMap.get(debuffName));
-				}catch(NullPointerException e){
-					//e.printStackTrace();
+			try {
+
+				for (String buffName : buffNames) {
+					try {
+
+						buffs.add(Main.buffsMap.get(buffName));
+					} catch (NullPointerException e) {
+						// e.printStackTrace();
+					}
 				}
+
+				for (String debuffName : debuffNames) {
+					try {
+						debuffs.add(Main.debuffsMap.get(debuffName));
+					} catch (NullPointerException e) {
+						// e.printStackTrace();
+					}
+				}
+			} catch (NullPointerException e) {
+				System.out.println(itemName + " does not have any buffs");
 			}
 			// add new skill to list
 			items.add(new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
-			Main.itemMap.put(ChatColor.BLUE + itemName, new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
+			Main.itemMap.put(ChatColor.BLUE + itemName,
+					new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
 		}
 
 	}
@@ -68,5 +75,5 @@ public class GetItems {
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
-	
+
 }

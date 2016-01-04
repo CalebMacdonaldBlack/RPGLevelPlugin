@@ -6,6 +6,8 @@ import java.util.List;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import com.gigabytedx.rpgleveling.Main;
+
 public class Modifier {
 	double rate;
 	Long duration;
@@ -15,6 +17,8 @@ public class Modifier {
 	String target;
 	String trigger;
 	String name;
+	Main plugin;
+
 	public String getName() {
 		return name;
 	}
@@ -24,7 +28,7 @@ public class Modifier {
 	}
 
 	List<Entity> currentBuffs = new ArrayList<>();
-	
+
 	public double getRate() {
 		return rate;
 	}
@@ -85,9 +89,18 @@ public class Modifier {
 		this.trigger = trigger;
 	}
 
-	public Modifier(String name, double rate, Long duration, Long interval, double intensity, String type, String target,
-			String trigger) {
+	public Main getPlugin() {
+		return plugin;
+	}
+
+	public void setPlugin(Main plugin) {
+		this.plugin = plugin;
+	}
+
+	public Modifier(Main plugin, String name, double rate, Long duration, Long interval, double intensity, String type,
+			String target, String trigger) {
 		super();
+		this.plugin = plugin;
 		this.name = name;
 		this.rate = rate;
 		this.duration = duration;
@@ -100,6 +113,5 @@ public class Modifier {
 
 	public void applyBuff(Player damager, Entity entity) {
 	}
-	
-	
+
 }

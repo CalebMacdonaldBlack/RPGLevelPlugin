@@ -12,9 +12,9 @@ import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
 public class DamageOverTime extends Modifier {
 
-	public DamageOverTime(String name, double rate, Long duration, Long interval, double intensity, String type, String target,
-			String trigger) {
-		super(name, rate, duration, interval, intensity, type, target, trigger);
+	public DamageOverTime(Main plugin, String name, double rate, Long duration, Long interval, double intensity,
+			String type, String target, String trigger) {
+		super(plugin, name, rate, duration, interval, intensity, type, target, trigger);
 	}
 
 	@Override
@@ -22,8 +22,8 @@ public class DamageOverTime extends Modifier {
 		if (!(getCurrentBuffs().contains(entity))) {
 			getCurrentBuffs().add(entity);
 			final Long timeUntilBuffIsGone = System.currentTimeMillis() + getDuration() - 1000;
-			new RunSchedular(getCurrentBuffs(), timeUntilBuffIsGone, getInterval(), damager, entity,
-					getIntensity(), getTarget());
+			new RunSchedular(getCurrentBuffs(), timeUntilBuffIsGone, getInterval(), damager, entity, getIntensity(),
+					getTarget());
 		} else {
 		}
 	}
@@ -35,7 +35,7 @@ public class DamageOverTime extends Modifier {
 		public RunSchedular(final List<Entity> currentBuffs, final Long timeUntilBuffIsGone, final Long interval,
 				final Player damager, final Entity entity, final double intensity, final String target) {
 			this.entity = entity;
-			this.task = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.pluginInstance, new Runnable() {
+			this.task = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new Runnable() {
 
 				@Override
 				public void run() {

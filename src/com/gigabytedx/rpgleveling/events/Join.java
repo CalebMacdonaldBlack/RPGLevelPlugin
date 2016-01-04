@@ -22,10 +22,9 @@ public class Join implements Listener{
 		//initialize player with 0 xp if they aren't already saved in the xp file
 		if(plugin.playerExperience.getString(player.getUniqueId().toString()) == null){
 			plugin.playerExperience.set(player.getUniqueId().toString() + ".totalXP", 0);
-			plugin.playerExperience.set(player.getUniqueId().toString() + ".swordsmanXP", 0);
-			plugin.playerExperience.set(player.getUniqueId().toString() + ".archerXP", 0);
-			plugin.playerExperience.set(player.getUniqueId().toString() + ".ImprovisedCombat", 0);
-			plugin.playerExperience.set(player.getUniqueId().toString() + ".Agility", 0);
+			for(String skillName: plugin.getConfig().getConfigurationSection("skills").getKeys(false)){
+				plugin.playerExperience.set(player.getUniqueId().toString() + "." + skillName, 0);
+			}
 			plugin.savePlayerExperienceConfig();
 		}
 		

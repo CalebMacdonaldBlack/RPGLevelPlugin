@@ -8,3 +8,7 @@ commands:
     description: view items in inventory
   getxp:
     description: view amount of xp you have
+  openshop:
+    description: open an inventory with all the items unlocked to that player
+  setskillexperience:
+    description: debugging command to set skill experience of a player    

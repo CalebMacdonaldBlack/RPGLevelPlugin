@@ -7,7 +7,7 @@ skills:
         itemUnlock:
           - Claymore
           - Shoddy Helmet
-          - shoddy Leggings
+          - Shoddy Leggings
           - Shoddy Boots
           - Shoddy Chestpeice
         buffs:
@@ -16,10 +16,10 @@ skills:
       experienced:
         itemUnlock:
           - Swiehandler
-          - hardended Helmet
-          - hardended Leggings
-          - Shohardendedddy Boots
-          - hardended Chestpeice
+          - Hardened Helmet
+          - Hardened Leggings
+          - Hardened Boots
+          - Hardened Chestpeice
         buffs:
         debuffs:
         levelNumber: 10
@@ -88,6 +88,62 @@ Items:
       - Stun2
     Debuffs:
       - slowness1
+  Shoddy Helmet:
+    Type: LEATHER_HELMET
+    Lore: this is a Shoddy Helmet.
+    Enchanted: false
+    Cost: 20
+    Buffs:
+    Debuffs:
+  Shoddy Chestpeice:
+    Type: LEATHER_CHESTPLATE
+    Lore: this is a Chestpeice .
+    Enchanted: false
+    Cost: 20
+    Buffs:
+    Debuffs:
+  Shoddy Leggings:
+    Type: LEATHER_LEGGINGS
+    Lore: this is a Shoddy Leggings.
+    Enchanted: false
+    Cost: 20
+    Buffs:
+    Debuffs:
+  Shoddy Boots:
+    Type: LEATHER_BOOTS
+    Lore: this is a Shoddy Boots.
+    Enchanted: false
+    Cost: 20
+    Buffs:
+    Debuffs:
+  Hardened Helmet:
+    Type: IRON_HELMET
+    Lore: this is a Hardened Helmet.
+    Enchanted: false
+    Cost: 60
+    Buffs:
+    Debuffs:
+  Hardened Chestpeice:
+    Type: IRON_CHESTPLATE
+    Lore: this is a Hardened Chestpeice.
+    Enchanted: false
+    Cost: 60
+    Buffs:
+    Debuffs:
+  Hardened Leggings:
+    Type: IRON_LEGGINGS
+    Lore: this is a Hardened Leggings.
+    Enchanted: false
+    Cost: 60
+    Buffs:
+    Debuffs:
+  Hardened Boots:
+    Type: IRON_BOOTS
+    Lore: this is a Hardened Boots.
+    Enchanted: false
+    Cost: 60
+    Buffs:
+    Debuffs:
 Buffs:
   bleed1:
     Rate: 0.5
