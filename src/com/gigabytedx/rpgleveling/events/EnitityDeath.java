@@ -21,7 +21,9 @@ public class EnitityDeath implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
+		System.out.println("EVENT FIRED");
 		if (event.getEntity().getKiller() instanceof Player) {
+			System.out.println("YEP PLAYER");
 			Player damager = (Player) event.getEntity().getKiller();
 			addXPToPlayer(damager, event.getEntity());
 		}
@@ -29,14 +31,13 @@ public class EnitityDeath implements Listener {
 	}
 
 	private void addXPToPlayer(Player damager, Entity entity) {
-
 		for (String skillName : plugin.getConfig().getConfigurationSection("skills").getKeys(false)) {
 			@SuppressWarnings("unchecked")
 			List<String> itemsForXPGain = (List<String>) plugin.getConfig()
 					.getList("skills." + skillName + ".experienceGainedThough");
 			for (String itemForExperienceGain : itemsForXPGain) {
 				if (damager.getItemInHand() != null
-						&& damager.getItemInHand().getType().toString().toLowerCase().contains(itemForExperienceGain)) {
+						&& damager.getItemInHand().getType().toString().toLowerCase().contains(itemForExperienceGain.toLowerCase())) {
 					plugin.playerExperience.set(damager.getUniqueId().toString() + "." + skillName,
 							plugin.playerExperience.getInt(damager.getUniqueId().toString() + "." + skillName)
 									+ plugin.playerExperience.getInt("XP from Generic kill"));

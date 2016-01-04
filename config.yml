@@ -56,7 +56,8 @@ Items:
     Enchanted: false
     Cost: 20
     Buffs:
-      - bleed1
+      - Bleed1
+      - Stun1
     Debuffs:
       - slowness1
   Swiehandler:
@@ -65,8 +66,8 @@ Items:
     Enchanted: false
     Cost: 40
     Buffs:
-      - Stun1
-      - bleed1
+      - Fatigue1
+      - Bleed1
     Debuffs:
       - slowness1
   Hunting Bow:
@@ -75,7 +76,7 @@ Items:
     Enchanted: false
     Cost: 15
     Buffs:
-      - bleed1
+      - Bleed1
     Debuffs:
       - slowness1
   Long Bow:
@@ -84,8 +85,8 @@ Items:
     Enchanted: false
     Cost: 100
     Buffs:
-      - bleed1
-      - Stun2
+      - Bleed1
+      - Fatigue2
     Debuffs:
       - slowness1
   Shoddy Helmet:
@@ -145,7 +146,7 @@ Items:
     Buffs:
     Debuffs:
 Buffs:
-  bleed1:
+  Bleed1:
     Rate: 0.5
     Duration: 3000
     Interval: 20
@@ -153,7 +154,7 @@ Buffs:
     Type: damageOverTime
     Target: opponent
     Trigger: hit
-  Stun1:
+  Fatigue1:
     Rate: 0
     Duration: 3000
     Interval: 20
@@ -161,12 +162,20 @@ Buffs:
     Type: slowness
     Target: opponent
     Trigger: hit
-  Stun2:
+  Fatigue2:
     Rate: 0
     Duration: 5000
     Interval: 20
     Intensity: 2
     Type: slowness
+    Target: opponent
+    Trigger: hit
+  Stun1:
+    Rate: 0
+    Duration: 5000
+    Interval: 20
+    Intensity: 3
+    Type: nausea
     Target: opponent
     Trigger: hit
 Debuffs:

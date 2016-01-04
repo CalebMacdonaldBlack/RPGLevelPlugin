@@ -7,7 +7,10 @@ import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.gigabytedx.rpgleveling.Main;
+import com.gigabytedx.rpgleveling.modifiers.modifier.Blind;
+import com.gigabytedx.rpgleveling.modifiers.modifier.Chameleon;
 import com.gigabytedx.rpgleveling.modifiers.modifier.DamageOverTime;
+import com.gigabytedx.rpgleveling.modifiers.modifier.Nausea;
 import com.gigabytedx.rpgleveling.modifiers.modifier.Slowness;
 
 public class GetBuffs {
@@ -34,6 +37,7 @@ public class GetBuffs {
 			ConfigurationSection buffConfSection = main.getConfig().getConfigurationSection("Buffs")
 					.getConfigurationSection(buffName);
 			Modifier buff;
+			System.out.println("Type: " + buffConfSection.getString("Type"));
 			switch (buffConfSection.getString("Type")) {
 			case "damageOverTime":
 				buff = new DamageOverTime(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
@@ -45,6 +49,30 @@ public class GetBuffs {
 				break;
 			case "slowness":
 				buff = new Slowness(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
+						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
+						buffConfSection.getString("type"), buffConfSection.getString("Target"),
+						buffConfSection.getString("Trigger"));
+						buffs.add(buff);
+						Main.buffsMap.put(buffName, buff);
+				break;
+			case "nausea":
+				buff = new Nausea(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
+						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
+						buffConfSection.getString("type"), buffConfSection.getString("Target"),
+						buffConfSection.getString("Trigger"));
+						buffs.add(buff);
+						Main.buffsMap.put(buffName, buff);
+				break;
+			case "blind":
+				buff = new Blind(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
+						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
+						buffConfSection.getString("type"), buffConfSection.getString("Target"),
+						buffConfSection.getString("Trigger"));
+						buffs.add(buff);
+						Main.buffsMap.put(buffName, buff);
+				break;
+			case "chameleon":
+				buff = new Chameleon(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
 						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
 						buffConfSection.getString("type"), buffConfSection.getString("Target"),
 						buffConfSection.getString("Trigger"));
