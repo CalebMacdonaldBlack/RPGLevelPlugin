@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.potion.PotionEffect;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.item.Item;
@@ -15,11 +17,12 @@ public class Interact implements Listener{
 	@EventHandler
 	public void onHit(EntityDamageByEntityEvent event){
 		if(event.getDamager() instanceof Player){
+
 			Player damager = (Player) event.getDamager();
 			try{
-				damager.sendMessage(Main.itemMap.keySet().toString());
 			Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
 			for(Buff buff: itemUsed.getBuffs()){
+				System.out.println("appbuff: " + buff.toString());
 				buff.applyBuff(damager, event.getEntity());
 			}
 			}catch(NullPointerException e){
@@ -31,7 +34,6 @@ public class Interact implements Listener{
 			if(arrow.getShooter() instanceof Player){
 				Player damager = (Player) arrow.getShooter();
 				try{
-					damager.sendMessage(Main.itemMap.keySet().toString());
 				Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
 				for(Buff buff: itemUsed.getBuffs()){
 					buff.applyBuff(damager, event.getEntity());
@@ -41,6 +43,29 @@ public class Interact implements Listener{
 				}
 				
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onHoldItemInHand(PlayerItemHeldEvent event){
+		
+		//remove all potion effects from player
+		for(PotionEffect effect: event.getPlayer().getActivePotionEffects()){
+			event.getPlayer().removePotionEffect(effect.getType());
+		}
+		try{
+		Item itemUsed = Main.itemMap.get(event.getPlayer().getInventory().getItem(event.getNewSlot()).getItemMeta().getDisplayName());
+		System.out.println("Well this ran fine..." + itemUsed.getDebuffs().toString());
+		for(Buff buff: itemUsed.getBuffs()){
+			if(buff.getTrigger().equals("hold"))
+			buff.applyBuff(event.getPlayer(), null);
+		}
+		for(Buff buff: itemUsed.getDebuffs()){
+			if(buff.getTrigger().equals("hold"))
+			buff.applyBuff(event.getPlayer(), null);
+		}
+		}catch(NullPointerException e){
+			//event.getPlayer().sendMessage("not using a custom item");
 		}
 	}
 }

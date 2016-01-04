@@ -10,7 +10,6 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.modifiers.Buff;
-import com.gigabytedx.rpgleveling.modifiers.Debuff;
 
 public class GetItems {
 	private List<Item> items;
@@ -47,7 +46,7 @@ public class GetItems {
 				}
 			}
 			List<String> debuffNames = (List<String>) itemConfSection.getList("Debuffs");
-			List<Debuff> debuffs = new ArrayList<>();
+			List<Buff> debuffs = new ArrayList<>();
 			for(String debuffName : debuffNames){
 				try{
 					debuffs.add(Main.debuffsMap.get(debuffName));

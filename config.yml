@@ -65,6 +65,7 @@ Items:
     Enchanted: false
     Cost: 40
     Buffs:
+      - Stun1
       - bleed1
     Debuffs:
       - slowness1
@@ -84,6 +85,7 @@ Items:
     Cost: 100
     Buffs:
       - bleed1
+      - Stun2
     Debuffs:
       - slowness1
 Buffs:
@@ -93,6 +95,22 @@ Buffs:
     Interval: 20
     Intensity: 1
     Type: damageOverTime
+    Target: opponent
+    Trigger: hit
+  Stun1:
+    Rate: 0
+    Duration: 3000
+    Interval: 20
+    Intensity: 1
+    Type: slowness
+    Target: opponent
+    Trigger: hit
+  Stun2:
+    Rate: 0
+    Duration: 5000
+    Interval: 20
+    Intensity: 2
+    Type: slowness
     Target: opponent
     Trigger: hit
 Debuffs:

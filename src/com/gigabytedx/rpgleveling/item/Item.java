@@ -5,7 +5,6 @@ import java.util.List;
 import org.bukkit.Material;
 
 import com.gigabytedx.rpgleveling.modifiers.Buff;
-import com.gigabytedx.rpgleveling.modifiers.Debuff;
 
 public class Item {
 	private String name;
@@ -14,10 +13,10 @@ public class Item {
 	private Material type;
 	private boolean enchanted;
 	private List<Buff> buffs;
-	private List<Debuff> debuffs;
+	private List<Buff> debuffs;
 	
 	public Item(String name, String lore, double cost, Material type, boolean enchanted, List<Buff> buffs,
-			List<Debuff> debuffs) {
+			List<Buff> debuffs) {
 		super();
 		this.name = name;
 		this.lore = lore;
@@ -76,11 +75,11 @@ public class Item {
 		this.buffs = buffs;
 	}
 
-	public List<Debuff> getDebuffs() {
+	public List<Buff> getDebuffs() {
 		return debuffs;
 	}
 
-	public void setDebuffs(List<Debuff> debuffs) {
+	public void setDebuffs(List<Buff> debuffs) {
 		this.debuffs = debuffs;
 	}
 	
