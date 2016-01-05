@@ -60,7 +60,7 @@ public class Main extends JavaPlugin {
 
 	private void registerEvents() {
 		 PluginManager pm = getServer().getPluginManager();
-		 pm.registerEvents(new Interact(), this);
+		 pm.registerEvents(new Interact(this), this);
 		 pm.registerEvents(new Join(this), this);
 		 pm.registerEvents(new EnitityDeath(this), this);
 	}

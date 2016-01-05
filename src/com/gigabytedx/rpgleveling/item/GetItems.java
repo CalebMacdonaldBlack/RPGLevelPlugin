@@ -40,6 +40,8 @@ public class GetItems {
 			List<Modifier> buffs = new ArrayList<>();
 			List<String> debuffNames = (List<String>) itemConfSection.getList("Debuffs");
 			List<Modifier> debuffs = new ArrayList<>();
+			int damage = itemConfSection.getInt("Damage");
+			int protection = itemConfSection.getInt("Protection");
 			try {
 
 				for (String buffName : buffNames) {
@@ -65,9 +67,9 @@ public class GetItems {
 				System.out.println(itemName + " does not have any buffs");
 			}
 			// add new skill to list
-			items.add(new Item(itemName, lore, cost, type, enchanted, buffs, debuffs, location));
+			items.add(new Item(itemName, lore, cost, type, enchanted, buffs, debuffs, location, damage, protection));
 			Main.itemMap.put(ChatColor.BLUE + itemName,
-					new Item(itemName, lore, cost, type, enchanted, buffs, debuffs, location));
+					new Item(itemName, lore, cost, type, enchanted, buffs, debuffs, location, damage, protection));
 		}
 
 	}

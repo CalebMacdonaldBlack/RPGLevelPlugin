@@ -8,6 +8,7 @@ import com.gigabytedx.rpgleveling.Main;
 
 public class GetSkills {
 	private List<Skill> skills;
+	private List<Level> levels = new ArrayList<>();
 	Main main;
 
 	public GetSkills(Main main) {
@@ -26,7 +27,6 @@ public class GetSkills {
 		for (String skillName : skillConfigSectionNames) {
 			List<String> experienceGainedThrough = (List<String>) main.getConfig().getConfigurationSection("skills")
 					.getConfigurationSection(skillName).getList("experienceGainedThough");
-			List<Level> levels = new ArrayList<>();
 			Set<String> levelNames = main.getConfig().getConfigurationSection("skills")
 					.getConfigurationSection(skillName).getConfigurationSection("levels").getKeys(false);
 
@@ -62,4 +62,9 @@ public class GetSkills {
 		this.skills = skills;
 	}
 
+	public List<Level> getLevels() {
+		return levels;
+	}
+	
+	
 }

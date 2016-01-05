@@ -10,17 +10,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.modifiers.Modifier;
+import com.questcraft.itemapi.ItemAPI;
 
 public class AddItemToInventory {
 
 	public static Inventory addItem(Inventory inv, Item item, Main plugin, boolean obtainable) {
 		ItemStack itemStack = new ItemStack(item.getType());
-		if (item.isEnchanted()) {
+		try {
+			if (item.isEnchanted()) {
+				ItemAPI.addGlow(itemStack);
+			}
+		} catch (IllegalArgumentException e) {
+
 		}
 		ItemMeta meta = itemStack.getItemMeta();
 
 		meta.setDisplayName(ChatColor.BLUE + item.getName());
 		String loreText = item.getLore();
+
 		List<String> lore = new ArrayList<>();
 
 		lore.add(ChatColor.GOLD + "Cost: " + ChatColor.DARK_PURPLE + item.getCost());
@@ -41,8 +48,8 @@ public class AddItemToInventory {
 		} catch (NullPointerException e) {
 			System.out.println("No lore");
 		}
-		lore.add(" ");
 		if (item.getBuffs().size() > 0) {
+			lore.add(" ");
 			lore.add(ChatColor.GOLD + "Buffs");
 
 			for (Modifier buff : item.getBuffs()) {
@@ -58,13 +65,21 @@ public class AddItemToInventory {
 					}
 				}
 			}
-			lore.add(" ");
 		}
 		if (item.getDebuffs().size() > 0) {
+			lore.add(" ");
 			lore.add(ChatColor.RED + "Debuffs");
 			for (Modifier buff : item.getDebuffs()) {
 				lore.add(ChatColor.DARK_PURPLE + " - " + buff.getName());
 			}
+		}
+		
+		if(item.getDamage() > 0){
+			lore.add("");
+			lore.add(ChatColor.GREEN + "Attack Damage: " + ChatColor.RED + item.getDamage());
+		}else if (item.getProtection() > 0){
+			lore.add("");
+			lore.add(ChatColor.GREEN + "Armor Protection: " + ChatColor.RED + item.getProtection());
 		}
 		if (!obtainable) {
 			lore.add(" ");
