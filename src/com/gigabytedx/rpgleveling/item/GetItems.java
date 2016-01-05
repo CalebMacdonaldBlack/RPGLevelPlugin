@@ -35,6 +35,7 @@ public class GetItems {
 			Material type = Material.getMaterial(itemConfSection.getString("Type"));
 			double cost = itemConfSection.getDouble("Cost");
 			boolean enchanted = itemConfSection.getBoolean("Enchanted");
+			String location = itemConfSection.getString("Location");
 			List<String> buffNames = (List<String>) itemConfSection.getList("Buffs");
 			List<Modifier> buffs = new ArrayList<>();
 			List<String> debuffNames = (List<String>) itemConfSection.getList("Debuffs");
@@ -49,7 +50,10 @@ public class GetItems {
 						// e.printStackTrace();
 					}
 				}
-
+			} catch (NullPointerException e) {
+				System.out.println(itemName + " does not have any buffs");
+			}
+			try {
 				for (String debuffName : debuffNames) {
 					try {
 						debuffs.add(Main.debuffsMap.get(debuffName));
@@ -61,9 +65,9 @@ public class GetItems {
 				System.out.println(itemName + " does not have any buffs");
 			}
 			// add new skill to list
-			items.add(new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
+			items.add(new Item(itemName, lore, cost, type, enchanted, buffs, debuffs, location));
 			Main.itemMap.put(ChatColor.BLUE + itemName,
-					new Item(itemName, lore, cost, type, enchanted, buffs, debuffs));
+					new Item(itemName, lore, cost, type, enchanted, buffs, debuffs, location));
 		}
 
 	}

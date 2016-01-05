@@ -13,7 +13,7 @@ import com.gigabytedx.rpgleveling.modifiers.Modifier;
 
 public class AddItemToInventory {
 
-	public static Inventory addItem(Inventory inv, Item item, Main plugin) {
+	public static Inventory addItem(Inventory inv, Item item, Main plugin, boolean obtainable) {
 		ItemStack itemStack = new ItemStack(item.getType());
 		if (item.isEnchanted()) {
 		}
@@ -24,20 +24,23 @@ public class AddItemToInventory {
 		List<String> lore = new ArrayList<>();
 
 		lore.add(ChatColor.GOLD + "Cost: " + ChatColor.DARK_PURPLE + item.getCost());
+		try {
+			String[] words = loreText.split("\\s+");
 
-		String[] words = loreText.split("\\s+");
-
-		int count = 0;
-		String sentence = "";
-		for (String word : words) {
-			sentence = sentence.concat(word + " ");
-			if (++count > plugin.loreLength) {
-				lore.add(sentence);
-				sentence = "";
-				count = 0;
+			int count = 0;
+			String sentence = "";
+			for (String word : words) {
+				sentence = sentence.concat(word + " ");
+				if (++count > plugin.loreLength) {
+					lore.add(sentence);
+					sentence = "";
+					count = 0;
+				}
 			}
+			lore.add(sentence);
+		} catch (NullPointerException e) {
+			System.out.println("No lore");
 		}
-		lore.add(sentence);
 		lore.add(" ");
 		if (item.getBuffs().size() > 0) {
 			lore.add(ChatColor.GOLD + "Buffs");
@@ -62,6 +65,10 @@ public class AddItemToInventory {
 			for (Modifier buff : item.getDebuffs()) {
 				lore.add(ChatColor.DARK_PURPLE + " - " + buff.getName());
 			}
+		}
+		if (!obtainable) {
+			lore.add(" ");
+			lore.add(ChatColor.DARK_RED + "- Locked -");
 		}
 		meta.setLore(lore);
 		itemStack.setItemMeta(meta);

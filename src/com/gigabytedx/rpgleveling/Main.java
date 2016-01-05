@@ -18,6 +18,7 @@ import com.gigabytedx.rpgleveling.events.Interact;
 import com.gigabytedx.rpgleveling.events.Join;
 import com.gigabytedx.rpgleveling.item.GetItems;
 import com.gigabytedx.rpgleveling.item.Item;
+import com.gigabytedx.rpgleveling.locations.GetLocations;
 import com.gigabytedx.rpgleveling.modifiers.Modifier;
 import com.gigabytedx.rpgleveling.modifiers.GetBuffs;
 import com.gigabytedx.rpgleveling.skills.GetSkills;
@@ -30,6 +31,7 @@ import commands.ViewItems;
 
 public class Main extends JavaPlugin {
 	public GetSkills skills;
+	public GetLocations locations;
 	public static GetBuffs buffs;
 	public GetItems items;
 	public static Map<String, Item> itemMap = new HashMap<>();
@@ -75,6 +77,7 @@ public class Main extends JavaPlugin {
 		saveDefaultConfig();
 		
 		//get skills from config
+		locations = new GetLocations(this);
 		skills = new GetSkills(this);
 		buffs = new GetBuffs(this);
 		items = new GetItems(this);

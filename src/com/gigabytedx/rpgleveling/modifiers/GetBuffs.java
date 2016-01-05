@@ -11,6 +11,7 @@ import com.gigabytedx.rpgleveling.modifiers.modifier.Blind;
 import com.gigabytedx.rpgleveling.modifiers.modifier.Chameleon;
 import com.gigabytedx.rpgleveling.modifiers.modifier.DamageOverTime;
 import com.gigabytedx.rpgleveling.modifiers.modifier.Nausea;
+import com.gigabytedx.rpgleveling.modifiers.modifier.Poison;
 import com.gigabytedx.rpgleveling.modifiers.modifier.Slowness;
 
 public class GetBuffs {
@@ -65,6 +66,14 @@ public class GetBuffs {
 				break;
 			case "blind":
 				buff = new Blind(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
+						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
+						buffConfSection.getString("type"), buffConfSection.getString("Target"),
+						buffConfSection.getString("Trigger"));
+						buffs.add(buff);
+						Main.buffsMap.put(buffName, buff);
+				break;
+			case "poison":
+				buff = new Poison(plugin, buffName, buffConfSection.getDouble("Rate"), buffConfSection.getLong("Duration"),
 						buffConfSection.getLong("Interval"), buffConfSection.getDouble("Intensity"),
 						buffConfSection.getString("type"), buffConfSection.getString("Target"),
 						buffConfSection.getString("Trigger"));

@@ -30,7 +30,7 @@ public class ViewItems implements CommandExecutor {
 			player.sendMessage("size of items is: " + items.size());
 			Inventory inv = Bukkit.createInventory(player, 27,ChatColor.DARK_BLUE + "All available items");
 			for (Item item : items) {
-				inv = AddItemToInventory.addItem(inv, item, plugin);
+				inv = AddItemToInventory.addItem(inv, item, plugin, true);
 			}
 			player.openInventory(inv);
 		}
