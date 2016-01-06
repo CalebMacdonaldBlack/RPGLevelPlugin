@@ -13,8 +13,8 @@ import com.gigabytedx.rpgleveling.modifiers.Modifier;
 public class DamageOverTime extends Modifier {
 
 	public DamageOverTime(Main plugin, String name, double rate, Long duration, Long interval, double intensity,
-			String type, String target, String trigger) {
-		super(plugin, name, rate, duration, interval, intensity, type, target, trigger);
+			String type, String target, String trigger, String modifierType) {
+		super(plugin, name, rate, duration, interval, intensity, type, target, trigger, modifierType);
 	}
 
 	@Override

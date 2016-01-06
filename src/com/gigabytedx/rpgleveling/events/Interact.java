@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +18,7 @@ import org.bukkit.potion.PotionEffect;
 
 import com.gigabytedx.rpgleveling.Main;
 import com.gigabytedx.rpgleveling.item.Item;
+import com.gigabytedx.rpgleveling.modifiers.GetBuffs;
 import com.gigabytedx.rpgleveling.modifiers.Modifier;
 import com.gigabytedx.rpgleveling.shop.Shop;
 
@@ -47,7 +51,6 @@ public class Interact implements Listener {
 			if (arrow.getShooter() instanceof Player) {
 				Player damager = (Player) arrow.getShooter();
 				if (damager.getItemInHand().getType().equals(Material.BOW)) {
-					System.out.println("Confim?");
 					try {
 						Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
 						for (Modifier buff : itemUsed.getBuffs()) {
@@ -80,8 +83,9 @@ public class Interact implements Listener {
 			}
 		}
 		armorProtectionValue = armorProtectionValue * 4;
-		double dmgToSubtract = armorProtectionValue/100 * damage;
-		damage -=dmgToSubtract;
+		double dmgToSubtract = armorProtectionValue / 100 * damage;
+		damage -= dmgToSubtract;
+		System.out.println("DMG: " + damage + " armer: " + armorProtectionValue);
 		entity.damage(damage);
 
 	}
@@ -89,14 +93,10 @@ public class Interact implements Listener {
 	@EventHandler
 	public void onHoldItemInHand(PlayerItemHeldEvent event) {
 
-		// remove all potion effects from player
-		for (PotionEffect effect : event.getPlayer().getActivePotionEffects()) {
-			event.getPlayer().removePotionEffect(effect.getType());
-		}
+		checkArmor(event.getPlayer());
 		try {
 			Item itemUsed = Main.itemMap
 					.get(event.getPlayer().getInventory().getItem(event.getNewSlot()).getItemMeta().getDisplayName());
-			System.out.println("Well this ran fine..." + itemUsed.getDebuffs().toString());
 			for (Modifier buff : itemUsed.getBuffs()) {
 				if (buff.getTrigger().equals("hold"))
 					buff.applyBuff(event.getPlayer(), null);
@@ -119,5 +119,40 @@ public class Interact implements Listener {
 			}
 
 		}
+	}
+
+	@EventHandler
+	public void onInventory(InventoryClickEvent event) {
+	}
+
+	@EventHandler
+	public void onInventory(InventoryDragEvent event) {
+	}
+	
+	@EventHandler
+	public void onInventory(InventoryCloseEvent event) {
+			checkArmor((Player) event.getPlayer());
+	}
+
+	private void checkArmor(Player player) {
+		for (PotionEffect effect : player.getActivePotionEffects()) {
+			if(effect.getDuration() > 200000){
+				player.removePotionEffect(effect.getType());
+			}
+		}
+		GetBuffs.applyUnlockedModifiers(player, plugin);
+		for (ItemStack itemStack : player.getEquipment().getArmorContents()) {
+			try {
+				for (Modifier modifier : Main.itemMap.get(itemStack.getItemMeta().getDisplayName()).getBuffs()) {
+					modifier.applyBuff((Player) player, null);
+				}
+				for (Modifier modifier : Main.itemMap.get(itemStack.getItemMeta().getDisplayName()).getDebuffs()) {
+					modifier.applyBuff((Player) player, null);
+				}
+			} catch (NullPointerException e) {
+
+			}
+		}
+
 	}
 }

@@ -21,13 +21,10 @@ public class EnitityDeath implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
-		System.out.println("EVENT FIRED");
 		if (event.getEntity().getKiller() instanceof Player) {
-			System.out.println("YEP PLAYER");
 			Player damager = (Player) event.getEntity().getKiller();
 			addXPToPlayer(damager, event.getEntity());
 		}
-
 	}
 
 	private void addXPToPlayer(Player damager, Entity entity) {

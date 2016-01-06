@@ -12,8 +12,8 @@ import com.gigabytedx.rpgleveling.modifiers.Modifier;
 public class Blind extends Modifier{
 	
 	public Blind(Main plugin, String name, double rate, Long duration, Long interval, double intensity, String type,
-			String target, String trigger) {
-		super(plugin, name, rate, duration, interval, intensity, type, target, trigger);
+			String target, String trigger, String modifierType) {
+		super(plugin, name, rate, duration, interval, intensity, type, target, trigger, modifierType);
 		// TODO Auto-generated constructor stub
 	}
 	
