@@ -135,7 +135,7 @@ public class GetBuffs {
 				if (plugin.getConfig()
 						.getInt("skills." + skillName + ".levels." + levelName
 								+ ".levelNumber") <= plugin.playerExperience
-										.getInt(player.getUniqueId().toString() + "." + skillName)) {
+										.getInt(player.getUniqueId().toString() + "." + skillName) / 1000) {
 					List<String> buffNames = (List<String>) plugin.getConfig()
 							.getList("skills." + skillName + ".levels." + levelName + ".buffs");
 					List<String> debuffNames = (List<String>) plugin.getConfig()

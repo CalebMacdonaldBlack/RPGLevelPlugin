@@ -1,5 +1,7 @@
 package com.gigabytedx.rpgleveling.events;
 
+import java.util.Set;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -21,6 +23,8 @@ import com.gigabytedx.rpgleveling.item.Item;
 import com.gigabytedx.rpgleveling.modifiers.GetBuffs;
 import com.gigabytedx.rpgleveling.modifiers.Modifier;
 import com.gigabytedx.rpgleveling.shop.Shop;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class Interact implements Listener {
 
@@ -41,9 +45,8 @@ public class Interact implements Listener {
 					System.out.println("appbuff: " + buff.toString());
 					buff.applyBuff(damager, event.getEntity());
 				}
-				applyDamage(damager, (LivingEntity) event.getEntity(), itemUsed, itemUsed.getDamage());
+				applyDamage((LivingEntity) event.getEntity(), itemUsed.getDamage());
 			} catch (NullPointerException e) {
-				damager.sendMessage("not using a custom item");
 			}
 
 		} else if (event.getDamager() instanceof Arrow) {
@@ -57,22 +60,45 @@ public class Interact implements Listener {
 							buff.applyBuff(damager, (LivingEntity) event.getEntity());
 						}
 						if (arrow.isCritical()) {
-							applyDamage(damager, (LivingEntity) event.getEntity(), itemUsed,
-									Math.floor(itemUsed.getDamage() * 1.5));
+							applyDamage((LivingEntity) event.getEntity(), Math.floor(itemUsed.getDamage() * 1.5));
 							damager.sendMessage(ChatColor.GOLD + "1.5x Damage for critical hit!");
 						} else {
-							applyDamage(damager, (LivingEntity) event.getEntity(), itemUsed, itemUsed.getDamage());
+							applyDamage((LivingEntity) event.getEntity(), itemUsed.getDamage());
 						}
 					} catch (NullPointerException e) {
-						damager.sendMessage("not using a custom item");
 					}
 				}
 			}
+		} else if (event.getDamager() instanceof LivingEntity) {
+			Set<ProtectedRegion> protectedRegions = WorldGuardPlugin.inst()
+					.getRegionManager(event.getDamager().getLocation().getWorld())
+					.getApplicableRegions(event.getDamager().getLocation()).getRegions();
+			System.out.println(protectedRegions.size());
+			if (protectedRegions.size() > 0) {
+				ProtectedRegion[] prArray = new ProtectedRegion[protectedRegions.size()];
+				prArray = protectedRegions.toArray(prArray);
+				String name = event.getDamager().getCustomName();
+				name = name.substring(name.indexOf(ChatColor.GOLD + ""), name.length());
+				name = name.substring(2);
+				System.out.println("Regions." + prArray[0].getId() + ".SpawnableMobs." + name + ".Attack");
+
+				if (event.getEntity() instanceof Player) {
+					applyDamage((Player) event.getEntity(),
+							plugin.MobSpawningData
+									.getConfigurationSection("Regions." + prArray[0].getId() + ".SpawnableMobs." + name)
+									.getInt("Attack"));
+				} else {
+					((LivingEntity) event.getEntity()).damage(plugin.MobSpawningData
+							.getConfigurationSection("Regions." + prArray[0].getId() + ".SpawnableMobs." + name)
+							.getInt("Attack"));
+				}
+			}
+			event.setCancelled(true);
 		}
 
 	}
 
-	private void applyDamage(Player damager, LivingEntity entity, Item itemUsed, double damage) {
+	private void applyDamage(LivingEntity entity, double damage) {
 		double armorProtectionValue = 0;
 
 		for (ItemStack itemStack : entity.getEquipment().getArmorContents()) {
@@ -128,15 +154,28 @@ public class Interact implements Listener {
 	@EventHandler
 	public void onInventory(InventoryDragEvent event) {
 	}
-	
+
 	@EventHandler
 	public void onInventory(InventoryCloseEvent event) {
-			checkArmor((Player) event.getPlayer());
+		checkArmor((Player) event.getPlayer());
+		
+		try {
+			for (Modifier modifier : Main.itemMap.get(event.getPlayer().getItemInHand().getItemMeta().getDisplayName())
+					.getBuffs()) {
+				modifier.applyBuff((Player) event.getPlayer(), null);
+			}
+			for (Modifier modifier : Main.itemMap.get(event.getPlayer().getItemInHand().getItemMeta().getDisplayName())
+					.getDebuffs()) {
+				modifier.applyBuff((Player) event.getPlayer(), null);
+			}
+		} catch (NullPointerException e) {
+
+		}
 	}
 
 	private void checkArmor(Player player) {
 		for (PotionEffect effect : player.getActivePotionEffects()) {
-			if(effect.getDuration() > 200000){
+			if (effect.getDuration() > 200000) {
 				player.removePotionEffect(effect.getType());
 			}
 		}
@@ -153,6 +192,5 @@ public class Interact implements Listener {
 
 			}
 		}
-
 	}
 }

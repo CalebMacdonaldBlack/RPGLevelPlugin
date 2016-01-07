@@ -14,6 +14,9 @@ import com.gigabytedx.rpgleveling.Main;
 public class EnitityDeath implements Listener {
 
 	private Main plugin;
+	// I dont know why but killing a mob with enchanted item runs death event
+	// twice
+	private Entity lastDead;
 
 	public EnitityDeath(Main plugin) {
 		this.plugin = plugin;
@@ -21,7 +24,14 @@ public class EnitityDeath implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (event.getEntity().getKiller() instanceof Player) {
+		try {
+			if (event.getEntity().getKiller() instanceof Player && !(lastDead.equals(event.getEntity()))) {
+				lastDead = event.getEntity();
+				Player damager = (Player) event.getEntity().getKiller();
+				addXPToPlayer(damager, event.getEntity());
+			}
+		} catch (NullPointerException e) {
+			lastDead = event.getEntity();
 			Player damager = (Player) event.getEntity().getKiller();
 			addXPToPlayer(damager, event.getEntity());
 		}
@@ -33,8 +43,8 @@ public class EnitityDeath implements Listener {
 			List<String> itemsForXPGain = (List<String>) plugin.getConfig()
 					.getList("skills." + skillName + ".experienceGainedThough");
 			for (String itemForExperienceGain : itemsForXPGain) {
-				if (damager.getItemInHand() != null
-						&& damager.getItemInHand().getType().toString().toLowerCase().contains(itemForExperienceGain.toLowerCase())) {
+				if (damager.getItemInHand() != null && damager.getItemInHand().getType().toString().toLowerCase()
+						.contains(itemForExperienceGain.toLowerCase())) {
 					plugin.playerExperience.set(damager.getUniqueId().toString() + "." + skillName,
 							plugin.playerExperience.getInt(damager.getUniqueId().toString() + "." + skillName)
 									+ plugin.playerExperience.getInt("XP from Generic kill"));

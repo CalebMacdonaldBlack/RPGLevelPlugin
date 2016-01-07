@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="C:/Users/Caleb/Desktop/Server/bukkit.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Caleb/Desktop/Server/plugins/Libraries/ItemAPI.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Caleb/Desktop/Server/plugins/Libraries/ProtocolLib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Caleb/Desktop/Server/plugins/worldedit-bukkit-6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Caleb/Desktop/Server/plugins/worldguard-6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
