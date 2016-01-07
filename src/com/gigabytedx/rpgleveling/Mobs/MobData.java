@@ -12,8 +12,10 @@ public class MobData {
 	private int spawnRate;
 	private String mobName;
 	private boolean naturalAllowed;
+	private int xp;
 
-	public MobData(String mobName, int spawnRate, String type, int health, int attack, int level, List<Drop> drops, List<String> items, boolean naturalAllowed) {
+	public MobData(String mobName, int spawnRate, String type, int health, int attack, int level, List<Drop> drops,
+			List<String> items, boolean naturalAllowed, int xp) {
 		this.health = health;
 		this.attack = attack;
 		this.level = level;
@@ -23,8 +25,13 @@ public class MobData {
 		this.spawnRate = spawnRate;
 		this.mobName = mobName;
 		this.naturalAllowed = naturalAllowed;
+		this.xp = xp;
 	}
-	
+
+	public int getXp() {
+		return xp;
+	}
+
 	public boolean isNaturalAllowed() {
 		return naturalAllowed;
 	}

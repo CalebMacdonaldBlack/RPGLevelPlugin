@@ -88,7 +88,7 @@ public class EntitySpawn implements Listener {
 			} else {
 				event.setCancelled(true);
 			}
-		} catch (ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
 			if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
 				return false;
 			} else

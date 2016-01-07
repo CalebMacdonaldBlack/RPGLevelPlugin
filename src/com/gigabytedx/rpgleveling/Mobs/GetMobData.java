@@ -33,6 +33,7 @@ public class GetMobData {
 				int attack = mobConf.getInt("Attack");
 				int level = mobConf.getInt("Level");
 				int spawnRate = mobConf.getInt("SpawnRate");
+				int xp = mobConf.getInt("Xp");
 				String type = mobConf.getString("Type");
 				List<String> items = (List<String>) mobConf.getList("Items");
 				Set<String> dropNames = plugin.MobSpawningData.getConfigurationSection("Drops").getKeys(false);
@@ -44,7 +45,7 @@ public class GetMobData {
 							plugin.MobSpawningData.getBoolean("Drops." + dropName + ".Custom")));
 				}
 
-				regionMobs.add(new MobData(mobName, spawnRate, type, health, attack, level, drops, items, naturalAllowed));
+				regionMobs.add(new MobData(mobName, spawnRate, type, health, attack, level, drops, items, naturalAllowed, xp));
 			}
 			System.out.println("ADDDDDDDING A REGION HERERERER");
 			plugin.regions.addRegion(regionName, new Region(regionName, regionMobs ,plugin));
