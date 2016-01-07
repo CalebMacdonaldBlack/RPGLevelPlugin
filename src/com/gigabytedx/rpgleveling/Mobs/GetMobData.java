@@ -23,6 +23,8 @@ public class GetMobData {
 	private void getRegions() {
 		for (String regionName : plugin.MobSpawningData.getConfigurationSection("Regions").getKeys(false)) {
 			List<MobData> regionMobs = new ArrayList<>();
+			int maxAllowedToSpawnInRegion = plugin.MobSpawningData
+					.getConfigurationSection("Regions." + regionName).getInt("Max");
 			for (String mobName : plugin.MobSpawningData
 					.getConfigurationSection("Regions." + regionName + ".SpawnableMobs").getKeys(false)) {
 				ConfigurationSection mobConf = plugin.MobSpawningData
@@ -47,8 +49,7 @@ public class GetMobData {
 
 				regionMobs.add(new MobData(mobName, spawnRate, type, health, attack, level, drops, items, naturalAllowed, xp));
 			}
-			System.out.println("ADDDDDDDING A REGION HERERERER");
-			plugin.regions.addRegion(regionName, new Region(regionName, regionMobs ,plugin));
+			plugin.regions.addRegion(regionName, new Region(regionName, regionMobs ,plugin, maxAllowedToSpawnInRegion));
 		}
 
 	}

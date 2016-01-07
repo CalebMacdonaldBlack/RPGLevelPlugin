@@ -7,8 +7,11 @@ import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -39,11 +42,29 @@ public class EntitySpawn implements Listener {
 					for (MobData mobData : plugin.regions
 							.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId()).getSpawnableMobs()) {
 
-						if (mobData.isNaturalAllowed())
-							for (int x = 0; x < mobData.getSpawnRate(); x++) {
-								mobDataRandomPool.add(mobData);
+						if (mobData.isNaturalAllowed()) {
+							int countOfMobsInRegion = 0;
+							for (Entity entity : event.getLocation().getWorld().getEntities()) {
+								if (entity instanceof Monster || entity instanceof Animals) {
+									System.out.println("IS INSTANCE OF");
+									if (WorldGuardPlugin.inst().getRegionManager(entity.getLocation().getWorld())
+											.getApplicableRegions(entity.getLocation()).getRegions()
+											.contains((ProtectedRegion) protectedRegions.toArray()[0])) {
+										System.out.println("IS IN REGION");
+										countOfMobsInRegion++;
+									}
+
+								}
 							}
-						else {
+							if (countOfMobsInRegion < plugin.regions
+									.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId())
+									.getMaxAllowedToSpawnInRegion())
+								for (int x = 0; x < mobData.getSpawnRate(); x++) {
+									mobDataRandomPool.add(mobData);
+								}
+							else
+								System.out.println("Fuckk off we're full");
+						} else {
 							event.setCancelled(true);
 							return false;
 						}
@@ -85,15 +106,22 @@ public class EntitySpawn implements Listener {
 					} else
 						mob.getEquipment().setItemInHand(new ItemStack(Material.valueOf(itemType)));
 				}
+				System.out.println("Spawn successful");
+				return false;
 			} else {
 				event.setCancelled(true);
+				return false;
 			}
 		} catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
-			if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
+			if (!event.getSpawnReason().equals(SpawnReason.NATURAL)
+					&& !event.getSpawnReason().equals(SpawnReason.JOCKEY)
+					&& !event.getSpawnReason().equals(SpawnReason.MOUNT)) {
+
+				System.out.println("Spawn successful 1: " + event.getSpawnReason().toString());
 				return false;
 			} else
 				event.setCancelled(true);
+			return false;
 		}
-		return false;
 	}
 }

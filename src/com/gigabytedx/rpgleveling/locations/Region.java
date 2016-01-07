@@ -10,12 +10,18 @@ public class Region {
 	String name;
 	Main plugin;
 	List<MobData> spawnableMobs = new ArrayList<>();
+	private int maxAllowedToSpawnInRegion;
 
-	public Region(String name, List<MobData> spawnableMobs, Main plugin) {
+	public Region(String name, List<MobData> spawnableMobs, Main plugin, int maxAllowedToSpawnInRegion) {
 		super();
 		this.name = name;
 		this.plugin = plugin;
 		this.spawnableMobs = spawnableMobs;
+		this.maxAllowedToSpawnInRegion = maxAllowedToSpawnInRegion;
+	}
+
+	public int getMaxAllowedToSpawnInRegion() {
+		return maxAllowedToSpawnInRegion;
 	}
 
 	public String getName() {
