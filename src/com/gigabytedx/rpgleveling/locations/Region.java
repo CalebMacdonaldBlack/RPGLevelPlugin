@@ -25,5 +25,13 @@ public class Region {
 	public List<MobData> getSpawnableMobs() {
 		return spawnableMobs;
 	}
+	
+	public MobData getMobData(String mobName){
+		for(MobData mobData: spawnableMobs){
+			if(mobData.getMobName().equals(mobName))
+				return mobData;
+		}
+		return null;
+	}
 
 }

@@ -39,7 +39,8 @@ public class GetMobData {
 				for (String dropName : dropNames) {
 					drops.add(new Drop(plugin.MobSpawningData.getString("Drops." + dropName + ".Type"),
 							plugin.MobSpawningData.getInt("Drops." + dropName + ".Qty"),
-							plugin.MobSpawningData.getInt("Drops." + dropName + ".SpawnRate"), dropName));
+							plugin.MobSpawningData.getInt("Drops." + dropName + ".SpawnRate"), dropName,
+							plugin.MobSpawningData.getBoolean("Drops." + dropName + ".Custom")));
 				}
 
 				regionMobs.add(new MobData(mobName, spawnRate, type, health, attack, level, drops, items));
