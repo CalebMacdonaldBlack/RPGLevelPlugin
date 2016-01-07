@@ -50,35 +50,39 @@ public class EnitityDeath implements Listener {
 	}
 
 	private void setDrops(EntityDeathEvent event) {
-		Set<ProtectedRegion> protectedRegions = WorldGuardPlugin.inst()
-				.getRegionManager(event.getEntity().getLocation().getWorld())
-				.getApplicableRegions(event.getEntity().getLocation()).getRegions();
-
-		String mobName = event.getEntity().getCustomName();
-		mobName = mobName.substring(mobName.indexOf(ChatColor.GOLD + ""), mobName.length());
-		mobName = mobName.substring(2);
 		try {
-			if (plugin.regions.hasRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId())) {
-				List<Drop> itemRandomPool = new ArrayList<>();
-				for (Drop drop : plugin.regions.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId())
-						.getMobData(mobName).getDrops()) {
-					for (int x = 0; x < drop.getSpawnRate(); x++) {
-						itemRandomPool.add(drop);
+			Set<ProtectedRegion> protectedRegions = WorldGuardPlugin.inst()
+					.getRegionManager(event.getEntity().getLocation().getWorld())
+					.getApplicableRegions(event.getEntity().getLocation()).getRegions();
+
+			String mobName = event.getEntity().getCustomName();
+			mobName = mobName.substring(mobName.indexOf(ChatColor.GOLD + ""), mobName.length());
+			mobName = mobName.substring(2);
+			try {
+				if (plugin.regions.hasRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId())) {
+					List<Drop> itemRandomPool = new ArrayList<>();
+					for (Drop drop : plugin.regions.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId())
+							.getMobData(mobName).getDrops()) {
+						for (int x = 0; x < drop.getSpawnRate(); x++) {
+							itemRandomPool.add(drop);
+						}
+					}
+
+					Random random = new Random();
+					int randomIndex = random.nextInt(itemRandomPool.size());
+					Drop drop = itemRandomPool.get(randomIndex);
+					if (drop.isCustom()) {
+						AddItemToInventory.addItem(event.getEntity().getKiller().getInventory(),
+								Main.itemMap.get(ChatColor.BLUE + drop.getName()), plugin, true);
+					} else {
+						event.getEntity().getKiller().getInventory()
+								.addItem(new ItemStack(Material.valueOf(drop.getType()), drop.getQty()));
 					}
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
 
-				Random random = new Random();
-				int randomIndex = random.nextInt(itemRandomPool.size());
-				Drop drop = itemRandomPool.get(randomIndex);
-				if (drop.isCustom()) {
-					AddItemToInventory.addItem(event.getEntity().getKiller().getInventory(),
-							Main.itemMap.get(ChatColor.BLUE + drop.getName()), plugin, true);
-				} else {
-					event.getEntity().getKiller().getInventory()
-							.addItem(new ItemStack(Material.valueOf(drop.getType()), drop.getQty()));
-				}
 			}
-		} catch (ArrayIndexOutOfBoundsException e) {
+		} catch (NullPointerException e) {
 
 		}
 	}

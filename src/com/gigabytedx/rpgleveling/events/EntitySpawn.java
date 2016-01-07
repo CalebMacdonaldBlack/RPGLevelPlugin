@@ -12,6 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 
 import com.gigabytedx.rpgleveling.Main;
@@ -34,13 +35,30 @@ public class EntitySpawn implements Listener {
 		try {
 			if (plugin.regions.hasRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId())) {
 				List<MobData> mobDataRandomPool = new ArrayList<>();
-				for (MobData mobData : plugin.regions
-						.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId()).getSpawnableMobs()) {
-					for (int x = 0; x < mobData.getSpawnRate(); x++) {
-						mobDataRandomPool.add(mobData);
+				if (event.getSpawnReason().equals(SpawnReason.NATURAL))
+					for (MobData mobData : plugin.regions
+							.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId()).getSpawnableMobs()) {
+
+						if (mobData.isNaturalAllowed())
+							for (int x = 0; x < mobData.getSpawnRate(); x++) {
+								mobDataRandomPool.add(mobData);
+							}
+						else {
+							event.setCancelled(true);
+							return false;
+						}
+					}
+				else {
+					for (MobData mobData : plugin.regions
+							.getRegion(((ProtectedRegion) protectedRegions.toArray()[0]).getId()).getSpawnableMobs()) {
+						if (mobData.getType().equals(event.getEntityType().toString())) {
+							for (int x = 0; x < mobData.getSpawnRate(); x++) {
+								mobDataRandomPool.add(mobData);
+							}
+						}
+
 					}
 				}
-
 				Random random = new Random();
 				int randomIndex = random.nextInt(mobDataRandomPool.size());
 
@@ -67,11 +85,14 @@ public class EntitySpawn implements Listener {
 					} else
 						mob.getEquipment().setItemInHand(new ItemStack(Material.valueOf(itemType)));
 				}
-			}else{
+			} else {
 				event.setCancelled(true);
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			event.setCancelled(true);
+			if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
+				return false;
+			} else
+				event.setCancelled(true);
 		}
 		return false;
 	}

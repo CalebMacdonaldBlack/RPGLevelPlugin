@@ -42,7 +42,6 @@ public class Interact implements Listener {
 			try {
 				Item itemUsed = Main.itemMap.get(damager.getItemInHand().getItemMeta().getDisplayName());
 				for (Modifier buff : itemUsed.getBuffs()) {
-					System.out.println("appbuff: " + buff.toString());
 					buff.applyBuff(damager, event.getEntity());
 				}
 				applyDamage((LivingEntity) event.getEntity(), itemUsed.getDamage());
@@ -73,14 +72,12 @@ public class Interact implements Listener {
 			Set<ProtectedRegion> protectedRegions = WorldGuardPlugin.inst()
 					.getRegionManager(event.getDamager().getLocation().getWorld())
 					.getApplicableRegions(event.getDamager().getLocation()).getRegions();
-			System.out.println(protectedRegions.size());
 			if (protectedRegions.size() > 0) {
 				ProtectedRegion[] prArray = new ProtectedRegion[protectedRegions.size()];
 				prArray = protectedRegions.toArray(prArray);
 				String name = event.getDamager().getCustomName();
 				name = name.substring(name.indexOf(ChatColor.GOLD + ""), name.length());
 				name = name.substring(2);
-				System.out.println("Regions." + prArray[0].getId() + ".SpawnableMobs." + name + ".Attack");
 
 				if (event.getEntity() instanceof Player) {
 					applyDamage((Player) event.getEntity(),
@@ -111,7 +108,6 @@ public class Interact implements Listener {
 		armorProtectionValue = armorProtectionValue * 4;
 		double dmgToSubtract = armorProtectionValue / 100 * damage;
 		damage -= dmgToSubtract;
-		System.out.println("DMG: " + damage + " armer: " + armorProtectionValue);
 		entity.damage(damage);
 
 	}

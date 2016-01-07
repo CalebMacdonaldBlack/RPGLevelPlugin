@@ -29,6 +29,7 @@ public class GetMobData {
 						.getConfigurationSection("Regions." + regionName + ".SpawnableMobs." + mobName);
 
 				int health = mobConf.getInt("Health");
+				boolean naturalAllowed = mobConf.getBoolean("Natural");
 				int attack = mobConf.getInt("Attack");
 				int level = mobConf.getInt("Level");
 				int spawnRate = mobConf.getInt("SpawnRate");
@@ -43,10 +44,10 @@ public class GetMobData {
 							plugin.MobSpawningData.getBoolean("Drops." + dropName + ".Custom")));
 				}
 
-				regionMobs.add(new MobData(mobName, spawnRate, type, health, attack, level, drops, items));
+				regionMobs.add(new MobData(mobName, spawnRate, type, health, attack, level, drops, items, naturalAllowed));
 			}
 			System.out.println("ADDDDDDDING A REGION HERERERER");
-			plugin.regions.addRegion(regionName, new Region(regionName, regionMobs, plugin));
+			plugin.regions.addRegion(regionName, new Region(regionName, regionMobs ,plugin));
 		}
 
 	}

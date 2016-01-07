@@ -40,7 +40,6 @@ public class GetBuffs {
 			ConfigurationSection buffConfSection = main.getConfig().getConfigurationSection("Buffs")
 					.getConfigurationSection(buffName);
 			Modifier buff;
-			System.out.println("Type: " + buffConfSection.getString("Type"));
 			switch (buffConfSection.getString("Type")) {
 			case "damageOverTime":
 				buff = new DamageOverTime(plugin, buffName, buffConfSection.getDouble("Rate"),
@@ -141,7 +140,6 @@ public class GetBuffs {
 					List<String> debuffNames = (List<String>) plugin.getConfig()
 							.getList("skills." + skillName + ".levels." + levelName + ".debuffs");
 					try {
-						System.out.println("TRYING: " + buffNames.toString());
 						for (String buffName : buffNames) {
 							Main.buffsMap.get(buffName).applyBuff(player, null);
 						}
@@ -149,7 +147,6 @@ public class GetBuffs {
 
 					}
 					try {
-						System.out.println("TRYING: " + debuffNames.toString());
 						for (String debuffName : debuffNames) {
 							
 							Main.buffsMap.get(debuffName).applyBuff(player, null);

@@ -11,8 +11,9 @@ public class MobData {
 	private String type;
 	private int spawnRate;
 	private String mobName;
+	private boolean naturalAllowed;
 
-	public MobData(String mobName, int spawnRate, String type, int health, int attack, int level, List<Drop> drops, List<String> items) {
+	public MobData(String mobName, int spawnRate, String type, int health, int attack, int level, List<Drop> drops, List<String> items, boolean naturalAllowed) {
 		this.health = health;
 		this.attack = attack;
 		this.level = level;
@@ -21,8 +22,13 @@ public class MobData {
 		this.type = type;
 		this.spawnRate = spawnRate;
 		this.mobName = mobName;
+		this.naturalAllowed = naturalAllowed;
 	}
 	
+	public boolean isNaturalAllowed() {
+		return naturalAllowed;
+	}
+
 	public String getMobName() {
 		return mobName;
 	}

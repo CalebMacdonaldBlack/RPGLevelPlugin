@@ -19,7 +19,6 @@ public class Speed extends Modifier{
 	
 	@Override
 	public void applyBuff(Player player, Entity entity) {
-		System.out.println("ATTEMPTING");
 		if(getTarget().equals("player")){
 			if(getTrigger().equals("hold"))
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, (int) getIntensity()));
