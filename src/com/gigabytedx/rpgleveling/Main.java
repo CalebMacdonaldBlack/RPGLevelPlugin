@@ -33,6 +33,7 @@ import commands.GetXP;
 import commands.OpenShop;
 import commands.PrintSkills;
 import commands.SetSkillExperience;
+import commands.SetWalk;
 import commands.ViewItems;
 
 public class Main extends JavaPlugin {
@@ -84,6 +85,7 @@ public class Main extends JavaPlugin {
 		getCommand("viewitems").setExecutor(new ViewItems(this));
 		getCommand("getxp").setExecutor(new GetXP(this));
 		getCommand("openshop").setExecutor(new OpenShop(this));
+		getCommand("setwalk").setExecutor(new SetWalk(this));
 		getCommand("setskillexperience").setExecutor(new SetSkillExperience(this));
 	}
 

@@ -11,4 +11,6 @@ commands:
   openshop:
     description: open an inventory with all the items unlocked to that player
   setskillexperience:
-    description: debugging command to set skill experience of a player    
+    description: debugging command to set skill experience of a player   
+  setwalk:
+    description: set walk speed of player      
